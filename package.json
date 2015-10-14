@@ -1,0 +1,32 @@
+{
+  "name": "linux-mobile-connection",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./tests/main.js",
+    "hw": "git add -A && git commit -m 'oki'&&npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
+    "patch": "npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
+    "prepublish": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dottgonzo/linux-mobile-connection.git"
+  },
+  "keywords": [
+    "linux",
+    "mobile",
+    "modem",
+    "3g",
+    "wvdial"
+  ],
+  "author": "Dario Caruso",
+  "license": "GPLv2",
+  "bugs": {
+    "url": "https://github.com/dottgonzo/linux-mobile-connection/issues"
+  },
+  "dependencies": {
+    "json-add": "0.0.1",
+    "path-exists": "^2.0.0"
+  }
+}

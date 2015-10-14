@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "json-add": "0.0.1",
-    "path-exists": "^2.0.0"
+    "path-exists": "^2.0.0",
+    "promise": "^7.0.4"
   }
 }

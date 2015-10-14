@@ -71,20 +71,19 @@ module.exports=function(provider,opt){
   return new Promise(function (resolve, reject) {
 
     var options={};
-    options.timer=false;
     options.verbose=true;
     options.wvdialFile='/etc/wvdial.conf';
     options.dev=false;
     options.ifOffline=true;
     options.reconnect=false;
-    options.retry=false;
-    options.retryMax=false;
+    options.retry=true;
+    options.retryMax=10;
 
     merge(options,opt);
 
     if (provider && provider.apn){
 
-      if(options.timer){
+      if(options.retry){
 
         setTimeout(function () {
 

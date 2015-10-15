@@ -1,57 +1,71 @@
 var Wvdial=require('wvdialjs'),
 pathExists=require('path-exists'),
 merge=require('json-add'),
+timerdaemon=require('timerdaemon'),
 Promise=require('promise')
 lsusbdev=require('lsusbdev');
 
-function goconnect(provider,options){
+
+function setfordev(provider,options){
+  var mobilemodem=new Wvdial(options.wvdialFile);
+
   return new Promise(function (resolve, reject) {
 
-    var mobilemodem=new Wvdial(options.wvdialFile);
+    if(pathExists.sync('/sys/bus/usb/devices/'+options.dev)){
 
-    if(options.dev){
+      lsusbdev().then(function(data){
 
-      if(pathExists.sync('/sys/bus/usb/devices/'+options.dev)){
+        for(var i=0;i<data.length;i++){
+          var usb=data[i];
 
-        lsusbdev().then(function(data){
+          if(usb.type=='serial'&&usb.hub==options.dev){
+            if(pathExists.sync(options.wvdialFile)){
+              mobilemodem.setUsb(usb.dev).then(function(){
+                resolve(success:true);
+              }).catch(function(err){
+                reject(err)
+              })
 
-          for(var i=0;i<data.length;i++){
-            var usb=data[i];
-
-            if(usb.type=='serial'&&usb.hub==options.dev){
-              if(pathExists.sync(options.wvdialFile)){
+            } else{
+              mobilemodem.configure(provider).then(function(){
                 mobilemodem.setUsb(usb.dev).then(function(){
-                  mobilemodem.connect().then(function(){
-                    resolve(success:true);
-                  }).catch(function(err){
-                    reject(err)
-                  })
+                  resolve(success:true);
                 }).catch(function(err){
                   reject(err)
                 })
-
-              } else{
-                mobilemodem.configure(provider).then(function(){
-                  mobilemodem.setUsb(usb.dev).then(function(){
-                    mobilemodem.connect().then(function(){
-                      resolve(success:true);
-                    }).catch(function(err){
-                      reject(err)
-                    })
-                  }).catch(function(err){
-                    reject(err)
-                  })
-                }).catch(function(err){
-                  reject(err)
-                })
-              }
+              }).catch(function(err){
+                reject(err)
+              })
             }
           }
-        })
-      } else{
-        reject({error:"Wrong device"})
+        }
+      })
+    }else{
+      reject({error:"Wrong device"})
 
-      }
+    }
+
+  })
+}
+
+
+function goconnect(provider,options){
+  var mobilemodem=new Wvdial(options.wvdialFile);
+
+  return new Promise(function (resolve, reject) {
+
+
+    if(options.dev){
+      setfordev(provider,options).then(function(){
+        mobilemodem.connect().then(function(){
+          resolve(success:true);
+        }).catch(function(err){
+          reject(err)
+        })
+      }).catch(function(err){
+        reject(err)
+      })
+
     } else {
       mobilemodem.configure(provider).then(function(){
         mobilemodem.connect().then(function(){
@@ -83,28 +97,47 @@ module.exports=function(provider,opt){
 
     if (provider && provider.apn){
 
-      if(options.retry){
+      if(options.retry && options.ifOffline){
 
-        setTimeout(function () {
 
-          if(options.ifOffline){
+        if(options.dev){
 
-            testConnection().then(function(){
-              reject({online:true});
-            }).catch(function(err){
-              goconnect(provider,options).catch(function(err){
-                reject(err)
+
+          setfordev(provider,options).then(function(){
+
+
+            resolve({running:true});
+
+            timerdaemon.pre(60000,function () {
+
+
+              testConnection().catch(function(){
+                goconnect(provider,options)
               })
+
+
+            })
+          }).catch(function(err){
+            reject(err)
+          })
+
+
+        } else{
+          resolve({running:true});
+
+          timerdaemon.pre(60000,function () {
+
+
+            testConnection().catch(function(){
+              goconnect(provider,options)
             })
 
-          } else{
 
-            goconnect(provider,options).catch(function(err){
-              reject(err)
-            })
+          });
+        }
 
-          }
-        }, options.timer);
+
+
       } else{
 
         if(options.ifOffline){

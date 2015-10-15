@@ -33,7 +33,7 @@
     "promise-test-connection": "0.0.1",
     "timerdaemon": "0.0.2",
     "verbo": "0.0.9",
-    "wvdialjs": "0.0.19"
+    "wvdialjs": "0.0.20"
   },
   "devDependencies": {
     "netw": "0.0.2"

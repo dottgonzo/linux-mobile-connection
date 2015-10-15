@@ -27,9 +27,11 @@
   },
   "dependencies": {
     "json-add": "0.0.1",
+    "lsusbdev": "0.0.3",
     "path-exists": "^2.0.0",
     "promise": "^7.0.4",
-    "timerdaemon": "0.0.2"
+    "timerdaemon": "0.0.2",
+    "wvdialjs": "0.0.19"
   },
   "devDependencies": {
     "netw": "0.0.2"

@@ -72,12 +72,8 @@ function goconnect(provider,options){
 
     if(options.dev){
       setfordev(provider,options).then(function(){
-        mobilemodem.connect().then(function(){
-          verb('connection',"info","linux-mobile-connection")
-          resolve({success:true});
-        }).catch(function(err){
-          reject(err)
-        })
+        mobilemodem.connect();
+        resolve({success:true});
       }).catch(function(err){
         reject(err)
       })
@@ -85,12 +81,9 @@ function goconnect(provider,options){
     } else {
       mobilemodem.configure(provider).then(function(){
         verb('configure',"info","linux-mobile-connection")
-        mobilemodem.connect().then(function(){
-          verb('connection',"info","linux-mobile-connection")
-          resolve({success:true});
-        }).catch(function(err){
-          reject(err)
-        })
+        mobilemodem.connect();
+        resolve({success:true});
+
       }).catch(function(err){
         reject(err)
       })
@@ -112,8 +105,7 @@ module.exports=function(provider,opt){
 if(opt){
     merge(options,opt);
 }
-console.log(options)
-console.log(provider)
+
 
  if (provider && provider.apn){
 
@@ -122,10 +114,8 @@ console.log(provider)
 
         if(options.dev){
 
-          console.log('hhh')
 
           setfordev(provider,options).then(function(){
-console.log('set')
 
             resolve({running:true});
 
@@ -144,7 +134,6 @@ console.log('set')
 
 
         } else{
-          console.log('ttt')
 
           resolve({running:true});
 
@@ -164,17 +153,13 @@ console.log('set')
       } else{
 
         if(options.ifOffline){
-console.log('1')
           testConnection().then(function(){
-            console.log('2')
             reject({online:true});
           }).catch(function(err){
-            console.log('3')
             goconnect(provider,options).then(function(data){
               resolve(data);
 
             }).catch(function(err){
-              console.log('4')
               reject(err)
             })
           })

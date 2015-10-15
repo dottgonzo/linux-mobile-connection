@@ -136,6 +136,7 @@ verb("daemonized modem");
         } else{
 
           resolve({running:true});
+          verb("daemonized modem");
 
           timerdaemon.pre(60000,function () {
 
@@ -144,8 +145,6 @@ verb("daemonized modem");
               goconnect(provider,options).then(function(data){
                 resolve(data);
 
-              }).catch(function(err){
-                reject(err)
               })
             })
 

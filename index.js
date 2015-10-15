@@ -63,11 +63,12 @@ function setfordev(provider,options){
 
 
 function goconnect(provider,options){
+  verb('connect',"info","linux-mobile-connection")
+
   var mobilemodem=new Wvdial(options.wvdialFile);
 
   return new Promise(function (resolve, reject) {
 
-    verb('connect',"info","linux-mobile-connection")
     if(options.dev){
       setfordev(provider,options).then(function(){
         mobilemodem.connect().then(function(){
@@ -168,7 +169,10 @@ console.log('1')
             reject({online:true});
           }).catch(function(err){
             console.log('3')
-            goconnect(provider,options).catch(function(err){
+            goconnect(provider,options).then(function(data){
+              resolve(data);
+
+            }).catch(function(err){
               console.log('4')
               reject(err)
             })

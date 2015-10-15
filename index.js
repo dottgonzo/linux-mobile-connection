@@ -80,7 +80,7 @@ function goconnect(provider,options){
 
     } else {
       mobilemodem.configure(provider).then(function(){
-        verb('configure',"info","linux-mobile-connection")
+        verb('configure',"info","linux-mobile-connection");
         mobilemodem.connect();
         resolve({success:true});
 
@@ -118,7 +118,7 @@ if(opt){
           setfordev(provider,options).then(function(){
 
             resolve({running:true});
-
+verb("daemonized modem");
             timerdaemon.pre(60000,function () {
 
 
@@ -160,7 +160,7 @@ if(opt){
         if(options.ifOffline){
           testConnection().then(function(){
             reject({online:true});
-          }).catch(function(err){
+          }).catch(function(){
             goconnect(provider,options).then(function(data){
               resolve(data);
 

@@ -18,5 +18,5 @@ mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","usernam
 
 })
 }).catch(function(err){
-  verb(err,"error")
+  verb(err,"error","test connection check")
 })

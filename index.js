@@ -10,10 +10,12 @@ function setfordev(provider,options){
   var mobilemodem=new Wvdial(options.wvdialFile);
 
   return new Promise(function (resolve, reject) {
-
+console.log('here1')
     if(pathExists.sync('/sys/bus/usb/devices/'+options.dev)){
+      console.log('here2')
 
       lsusbdev().then(function(data){
+        console.log('here3')
 
         for(var i=0;i<data.length;i++){
           var usb=data[i];
@@ -21,17 +23,27 @@ function setfordev(provider,options){
           if(usb.type=='serial'&&usb.hub==options.dev){
             if(pathExists.sync(options.wvdialFile)){
               mobilemodem.setUsb(usb.dev).then(function(){
+                console.log('here5')
+
                 resolve({success:true});
               }).catch(function(err){
+                console.log('here7')
+
                 reject(err)
               })
 
             } else{
+              console.log('here4')
+
               mobilemodem.configure(provider).then(function(){
+                console.log('here6')
+
                 mobilemodem.setUsb(usb.dev).then(function(){
                   resolve({success:true});
                 }).catch(function(err){
                   reject(err)
+                  console.log('here8')
+
                 })
               }).catch(function(err){
                 reject(err)

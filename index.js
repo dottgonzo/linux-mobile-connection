@@ -121,9 +121,20 @@ if(opt){
 verb("daemonized modem");
             timerdaemon.pre(60000,function () {
 
-
               testConnection().catch(function(){
-                goconnect(provider,options)
+                var mobilemodem=new Wvdial(options.wvdialFile);
+                if(options.dev){
+                  setfordev(provider,options).then(function(){
+                    mobilemodem.connect();
+                  })
+
+                } else {
+                  mobilemodem.configure(provider).then(function(){
+                    verb('configure',"info","linux-mobile-connection");
+                    mobilemodem.connect();
+                })
+
+                }
               })
 
 
@@ -136,16 +147,24 @@ verb("daemonized modem");
         } else{
 
           resolve({running:true});
-          verb("daemonized modem");
 
           timerdaemon.pre(60000,function () {
 
 
             testConnection().catch(function(){
-              goconnect(provider,options).then(function(data){
-                resolve(data);
+              var mobilemodem=new Wvdial(options.wvdialFile);
+              if(options.dev){
+                setfordev(provider,options).then(function(){
+                  mobilemodem.connect();
+                })
 
+              } else {
+                mobilemodem.configure(provider).then(function(){
+                  verb('configure',"info","linux-mobile-connection");
+                  mobilemodem.connect();
               })
+
+              }
             })
 
 

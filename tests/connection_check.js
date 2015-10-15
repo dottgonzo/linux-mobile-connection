@@ -1,6 +1,6 @@
 var mobileconnect=require('../index'),
 netw=require('netw'),
-timerdaemon=require('netw'),
+timerdaemon=require('timerdaemon'),
 verb=require('verbo');
 
 mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","username":"tre","password":"tre"},{retry:false}).then(function(){

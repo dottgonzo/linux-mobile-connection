@@ -30,5 +30,8 @@
     "path-exists": "^2.0.0",
     "promise": "^7.0.4",
     "timerdaemon": "0.0.2"
+  },
+  "devDependencies": {
+    "netw": "0.0.2"
   }
 }

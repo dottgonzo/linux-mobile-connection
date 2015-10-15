@@ -89,13 +89,12 @@ module.exports=function(provider,opt){
     options.wvdialFile='/etc/wvdial.conf';
     options.dev=false;
     options.ifOffline=true;
-    options.reconnect=false;
     options.retry=true;
-    options.retryMax=10;
-
+  //  options.retryMax=10;
+if(opt){
     merge(options,opt);
-
-    if (provider && provider.apn){
+}
+ if (provider && provider.apn){
 
       if(options.retry && options.ifOffline){
 

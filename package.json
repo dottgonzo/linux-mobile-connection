@@ -30,6 +30,7 @@
     "lsusbdev": "0.0.3",
     "path-exists": "^2.0.0",
     "promise": "^7.0.4",
+    "promise-test-connection": "0.0.1",
     "timerdaemon": "0.0.2",
     "wvdialjs": "0.0.19"
   },

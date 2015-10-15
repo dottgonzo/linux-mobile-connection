@@ -2,7 +2,8 @@ var Wvdial=require('wvdialjs'),
 pathExists=require('path-exists'),
 merge=require('json-add'),
 timerdaemon=require('timerdaemon'),
-Promise=require('promise')
+Promise=require('promise'),
+testConnection=require('promise-test-connection'),
 lsusbdev=require('lsusbdev');
 
 

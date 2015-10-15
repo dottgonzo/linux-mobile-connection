@@ -95,6 +95,8 @@ if(opt){
     merge(options,opt);
 }
 console.log(options)
+console.log(provider)
+
  if (provider && provider.apn){
 
       if(options.retry && options.ifOffline){
@@ -104,7 +106,7 @@ console.log(options)
 
 
           setfordev(provider,options).then(function(){
-
+console.log('set')
 
             resolve({running:true});
 

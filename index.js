@@ -21,7 +21,7 @@ function setfordev(provider,options){
           if(usb.type=='serial'&&usb.hub==options.dev){
             if(pathExists.sync(options.wvdialFile)){
               mobilemodem.setUsb(usb.dev).then(function(){
-                resolve(success:true);
+                resolve({success:true});
               }).catch(function(err){
                 reject(err)
               })
@@ -29,7 +29,7 @@ function setfordev(provider,options){
             } else{
               mobilemodem.configure(provider).then(function(){
                 mobilemodem.setUsb(usb.dev).then(function(){
-                  resolve(success:true);
+                  resolve({success:true});
                 }).catch(function(err){
                   reject(err)
                 })
@@ -58,7 +58,7 @@ function goconnect(provider,options){
     if(options.dev){
       setfordev(provider,options).then(function(){
         mobilemodem.connect().then(function(){
-          resolve(success:true);
+          resolve({success:true});
         }).catch(function(err){
           reject(err)
         })
@@ -69,7 +69,7 @@ function goconnect(provider,options){
     } else {
       mobilemodem.configure(provider).then(function(){
         mobilemodem.connect().then(function(){
-          resolve(success:true);
+          resolve({success:true});
         }).catch(function(err){
           reject(err)
         })

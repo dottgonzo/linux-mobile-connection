@@ -93,7 +93,6 @@ function goconnect(provider,options){
 }
 
 module.exports=function(provider,opt){
-  return new Promise(function (resolve, reject) {
 
     var options={};
     options.verbose=true;
@@ -106,6 +105,7 @@ if(opt){
     merge(options,opt);
 }
 
+return new Promise(function (resolve, reject) {
 
  if (provider && provider.apn){
 
@@ -147,6 +147,7 @@ verb("daemonized modem");
         } else{
 
           resolve({running:true});
+          verb("daemonized modem");
 
           timerdaemon.pre(60000,function () {
 

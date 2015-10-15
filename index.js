@@ -136,7 +136,7 @@ if(opt){
 
           timerdaemon.pre(60000,function () {
             testConnection().catch(function(){
-              goconnect(provider,option
+              goconnect(provider,options)
             })
 
 

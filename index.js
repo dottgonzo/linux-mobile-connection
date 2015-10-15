@@ -11,7 +11,7 @@ function setfordev(provider,options){
   var mobilemodem=new Wvdial(options.wvdialFile);
 
   return new Promise(function (resolve, reject) {
-console.log('here1')
+    verb('setUsb',"info","linux-mobile-connection")
     if(pathExists.sync('/sys/bus/usb/devices/'+options.dev)){
       console.log('here2')
 
@@ -67,10 +67,11 @@ function goconnect(provider,options){
 
   return new Promise(function (resolve, reject) {
 
-console.log('connect')
+    verb('connect',"info","linux-mobile-connection")
     if(options.dev){
       setfordev(provider,options).then(function(){
         mobilemodem.connect().then(function(){
+          verb('connection',"info","linux-mobile-connection")
           resolve({success:true});
         }).catch(function(err){
           reject(err)
@@ -81,7 +82,9 @@ console.log('connect')
 
     } else {
       mobilemodem.configure(provider).then(function(){
+        verb('configure',"info","linux-mobile-connection")
         mobilemodem.connect().then(function(){
+          verb('connection',"info","linux-mobile-connection")
           resolve({success:true});
         }).catch(function(err){
           reject(err)

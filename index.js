@@ -67,7 +67,7 @@ function goconnect(provider,options){
 
   return new Promise(function (resolve, reject) {
 
-
+console.log('connect')
     if(options.dev){
       setfordev(provider,options).then(function(){
         mobilemodem.connect().then(function(){

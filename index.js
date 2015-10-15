@@ -3,6 +3,7 @@ pathExists=require('path-exists'),
 merge=require('json-add'),
 timerdaemon=require('timerdaemon'),
 Promise=require('promise'),
+verb=require('verbo'),
 testConnection=require('promise-test-connection'),
 lsusbdev=require('lsusbdev');
 

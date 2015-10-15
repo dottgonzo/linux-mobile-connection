@@ -116,6 +116,7 @@ console.log(provider)
 
         if(options.dev){
 
+          console.log('hhh')
 
           setfordev(provider,options).then(function(){
 console.log('set')
@@ -137,6 +138,8 @@ console.log('set')
 
 
         } else{
+          console.log('ttt')
+
           resolve({running:true});
 
           timerdaemon.pre(60000,function () {

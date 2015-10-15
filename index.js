@@ -94,6 +94,7 @@ module.exports=function(provider,opt){
 if(opt){
     merge(options,opt);
 }
+console.log(options)
  if (provider && provider.apn){
 
       if(options.retry && options.ifOffline){

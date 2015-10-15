@@ -3,7 +3,7 @@ netw=require('netw'),
 timerdaemon=require('netw'),
 verb=require('verbo');
 
-mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","username":"tre","password":"tre"},{retry:false}).then(function(){
+mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","username":"tre","password":"tre"}).then(function(){
   timerdaemon.post(5000,function(){
   netw.data().then(function(doc){
     if (doc.network){

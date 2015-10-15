@@ -141,7 +141,12 @@ if(opt){
 
 
             testConnection().catch(function(){
-              goconnect(provider,options)
+              goconnect(provider,options).then(function(data){
+                resolve(data);
+
+              }).catch(function(err){
+                reject(err)
+              })
             })
 
 

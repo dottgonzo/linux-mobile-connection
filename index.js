@@ -162,11 +162,14 @@ console.log('set')
       } else{
 
         if(options.ifOffline){
-
+console.log('1')
           testConnection().then(function(){
+            console.log('2')
             reject({online:true});
           }).catch(function(err){
+            console.log('3')
             goconnect(provider,options).catch(function(err){
+              console.log('4')
               reject(err)
             })
           })

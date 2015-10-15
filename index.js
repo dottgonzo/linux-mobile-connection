@@ -93,6 +93,7 @@ function goconnect(provider,options){
 }
 
 module.exports=function(provider,opt){
+  return new Promise(function (resolve, reject) {
 
     var options={};
     options.verbose=true;
@@ -105,7 +106,6 @@ if(opt){
     merge(options,opt);
 }
 
-return new Promise(function (resolve, reject) {
 
  if (provider && provider.apn){
 
@@ -117,24 +117,10 @@ return new Promise(function (resolve, reject) {
 
           setfordev(provider,options).then(function(){
 
-            resolve({running:true});
-verb("daemonized modem");
+            resolve({running:true,daemonized:true});
             timerdaemon.pre(60000,function () {
-
               testConnection().catch(function(){
-                var mobilemodem=new Wvdial(options.wvdialFile);
-                if(options.dev){
-                  setfordev(provider,options).then(function(){
-                    mobilemodem.connect();
-                  })
-
-                } else {
-                  mobilemodem.configure(provider).then(function(){
-                    verb('configure',"info","linux-mobile-connection");
-                    mobilemodem.connect();
-                })
-
-                }
+                goconnect(provider,options)
               })
 
 
@@ -146,26 +132,11 @@ verb("daemonized modem");
 
         } else{
 
-          resolve({running:true});
-          verb("daemonized modem");
+          resolve({running:true,daemonized:true});
 
           timerdaemon.pre(60000,function () {
-
-
             testConnection().catch(function(){
-              var mobilemodem=new Wvdial(options.wvdialFile);
-              if(options.dev){
-                setfordev(provider,options).then(function(){
-                  mobilemodem.connect();
-                })
-
-              } else {
-                mobilemodem.configure(provider).then(function(){
-                  verb('configure',"info","linux-mobile-connection");
-                  mobilemodem.connect();
-              })
-
-              }
+              goconnect(provider,option
             })
 
 

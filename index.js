@@ -15,7 +15,6 @@ function setfordev(provider,options){
 
     if(pathExists.sync('/sys/bus/usb/devices/'+options.dev)){
 
-
       lsusbdev().then(function(data){
 
 

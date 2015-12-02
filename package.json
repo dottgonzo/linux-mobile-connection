@@ -36,7 +36,7 @@
     "promise-test-connection": "0.0.2",
     "timerdaemon": "0.0.2",
     "verbo": "0.0.9",
-    "wvdialjs": "0.0.28"
+    "wvdialjs": "0.0.29"
   },
   "devDependencies": {
     "chai": "^3.4.1"

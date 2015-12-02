@@ -2,7 +2,7 @@ var mobileconnect=require('../index'),
 netw=require('netw'),
 verb=require('verbo');
 
-mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","username":"tre","password":"tre"},{retry:false}).then(function(){
+mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","username":"tre","password":"tre"},{retry:false}).then(function(answer){
 
   setTimeout(function () {
     netw.data().then(function(doc){
@@ -18,7 +18,7 @@ mobileconnect({"label":"Tre Ricaricabile","apn":"tre.it","phone":"*99#","usernam
 
 
 
-
+verb(answer,'info','linux-mobile-connection tre connect info')
 
 
 }).catch(function(err){

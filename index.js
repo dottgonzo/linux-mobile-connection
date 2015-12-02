@@ -71,8 +71,13 @@ function goconnect(provider,options){
 
     if(options.dev){
       setfordev(provider,options).then(function(){
-        mobilemodem.connect();
-        resolve({success:true});
+        mobilemodem.connect().then(function(){
+          resolve({success:true});
+
+        }).catch(function(err){
+          reject(err);
+
+        });
       }).catch(function(err){
         reject(err)
       })
@@ -80,8 +85,13 @@ function goconnect(provider,options){
     } else {
       mobilemodem.configure(provider).then(function(){
 
-        mobilemodem.connect();
-        resolve({success:true});
+        mobilemodem.connect().then(function(){
+          resolve({success:true});
+
+        }).catch(function(err){
+          reject(err);
+
+        });
 
       }).catch(function(err){
         reject(err)
@@ -100,13 +110,13 @@ module.exports=function(provider,opt){
     options.dev=false;
     options.ifOffline=true;
     options.retry=true;
-  //  options.retryMax=10;
-if(opt){
-    merge(options,opt);
-}
+    //  options.retryMax=10;
+    if(opt){
+      merge(options,opt);
+    }
 
 
- if (provider && provider.apn){
+    if (provider && provider.apn){
 
       if(options.retry && options.ifOffline){
 
@@ -115,9 +125,16 @@ if(opt){
 
 
           setfordev(provider,options).then(function(){
+            goconnect(provider,options).then(function(){
+              reject({running:false,daemonized:true});
 
-            resolve({running:true,daemonized:true});
-            timerdaemon.pre(60000,function () {
+            }).catch(function(err){
+              reject(err);
+
+            })
+
+
+            timerdaemon.post(240000,function () {
               testConnection().catch(function(){
                 goconnect(provider,options)
               })
@@ -131,9 +148,15 @@ if(opt){
 
         } else{
 
-          resolve({running:true,daemonized:true});
+          goconnect(provider,options).then(function(){
+            reject({running:false,daemonized:true});
 
-          timerdaemon.pre(60000,function () {
+          }).catch(function(err){
+            reject(err);
+
+          })
+
+          timerdaemon.post(240000,function () {
             testConnection().catch(function(){
               goconnect(provider,options)
             })
@@ -147,25 +170,58 @@ if(opt){
       } else{
 
         if(options.ifOffline){
-          testConnection().then(function(){
-            reject({online:true});
-          }).catch(function(){
-            goconnect(provider,options).then(function(data){
-              resolve(data);
+
+          if(options.dev){
+            setfordev(provider,options).then(function(){
+              testConnection().then(function(){
+                reject({online:true});
+              }).catch(function(){
+                goconnect(provider,options).then(function(data){
+                  resolve(data);
+
+                }).catch(function(err){
+                  reject(err)
+                })
+              })
+            }).catch(function(err){
+              reject(err)
+            })
+          } else{
+            testConnection().then(function(){
+              reject({online:true});
+            }).catch(function(){
+              goconnect(provider,options).then(function(data){
+                resolve(data);
+
+              }).catch(function(err){
+                reject(err)
+              })
+            })
+          }
+
+
+        } else{
+          if(options.dev){
+            setfordev(provider,options).then(function(){
+              goconnect(provider,options).then(function(answer){
+                resolve(answer)
+
+              }).catch(function(err){
+                reject(err)
+              })
+            }).catch(function(err){
+              reject(err)
+            })
+          } else{
+            goconnect(provider,options).then(function(answer){
+              resolve(answer)
 
             }).catch(function(err){
               reject(err)
             })
-          })
 
-        } else{
-
-          goconnect(provider,options).catch(function(err){
-            reject(err)
-          })
-
+          }
         }
-
       }
 
     } else{

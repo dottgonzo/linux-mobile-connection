@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'call tests manually'",
+    "test": "mocha",
     "hw": "git add -A && git commit -m 'oki'&&npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
     "patch": "npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
     "prepublish": "npm test"
@@ -28,6 +28,7 @@
   "dependencies": {
     "json-add": "0.0.1",
     "lsusbdev": "0.0.3",
+    "netw": "0.0.16",
     "path-exists": "^2.0.0",
     "promise": "^7.0.4",
     "promise-test-connection": "0.0.2",
@@ -36,6 +37,6 @@
     "wvdialjs": "0.0.20"
   },
   "devDependencies": {
-    "netw": "0.0.2"
+    "chai": "^3.4.1"
   }
 }

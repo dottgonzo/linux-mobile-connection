@@ -1,6 +1,6 @@
 {
   "name": "linux-mobile-connection",
-  "version": "0.0.35",
+  "version": "0.0.37",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "connect-tre-4": "node run/tre_with_4.js",
     "hw": "git add -A && git commit -m 'oki'&&npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
     "patch": "npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
-    "prepublish": "npm test"
+    "prepublish": "#npm test"
   },
   "repository": {
     "type": "git",
@@ -28,17 +28,28 @@
     "url": "https://github.com/dottgonzo/linux-mobile-connection/issues"
   },
   "dependencies": {
-    "json-add": "0.0.1",
-    "lsusbdev": "0.0.3",
-    "netw": "0.0.18",
+    "bluebird": "^3.1.1",
+    "json-add": "0.0.7",
+    "lsusbdev": "0.0.6",
+    "netw": "0.0.47",
     "path-exists": "^2.0.0",
-    "promise": "^7.0.4",
-    "promise-test-connection": "0.0.2",
+    "promise-test-connection": "0.0.12",
     "timerdaemon": "0.0.2",
     "verbo": "0.0.9",
-    "wvdialjs": "0.0.30"
+    "wvdialjs": "0.0.31"
   },
   "devDependencies": {
-    "chai": "^3.4.1"
+    "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-bump": "^1.0.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-git": "^1.6.1",
+    "gulp-mocha": "^2.2.0",
+    "gulp-prompt": "^0.1.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tag-version": "^1.3.0",
+    "gulp-typescript": "^2.10.0",
+    "mocha": "^2.3.4"
   }
 }

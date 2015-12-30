@@ -24,8 +24,8 @@ function setfordev(provider:IProvider, options:IClassConf) {
                             mobilemodem.setUsb(usb.dev).then(function() {
                                 resolve({ success: true });
                             }).catch(function(err) {
-                                reject(err)
-                            })
+                                reject(err);
+                            });
 
                         } else {
 
@@ -33,22 +33,22 @@ function setfordev(provider:IProvider, options:IClassConf) {
                                 mobilemodem.setUsb(usb.dev).then(function() {
                                     resolve({ success: true });
                                 }).catch(function(err) {
-                                    reject(err)
-                                    console.log('here8')
-
-                                })
+                                    reject(err);
+                                    console.log('here8');
+                                });
                             }).catch(function(err) {
-                                reject(err)
-                            })
-                        }
+                                reject(err);
+                            });
+                            
+                        };
+                        
                     } else {
-                        reject("err")
-                    }
-                }
-            })
+                        reject("err");
+                    };
+                };
+            });
         } else {
-            reject({ error: "Wrong device" })
-
+            reject({ error: "Wrong device" });
         }
 
     })
@@ -56,7 +56,6 @@ function setfordev(provider:IProvider, options:IClassConf) {
 
 
 function goconnect(provider:IProvider, options:IClassConf) {
-
 
     let mobilemodem = new Wvdial(options.wvdialFile);
 
@@ -90,8 +89,6 @@ function goconnect(provider:IProvider, options:IClassConf) {
 };
 
 
-
-
 interface IClassConf {
     verbose: boolean;
     wvdialFile: string;
@@ -99,6 +96,7 @@ interface IClassConf {
     ifOffline: boolean;
     retry: boolean;
 };
+
 interface IClassOpt {
     verbose?: boolean;
     wvdialFile?: string;
@@ -106,6 +104,7 @@ interface IClassOpt {
     ifOffline?: boolean;
     retry?: boolean;
 };
+
 interface IProvider {
     label?: string;
     apn: string;
@@ -115,7 +114,7 @@ interface IProvider {
 };
 
 
-export =function(provider: IProvider, opt: IClassOpt) {
+export = function(provider: IProvider, opt: IClassOpt) {
     return new Promise(function(resolve, reject) {
 
         let options: IClassConf = {
@@ -133,6 +132,7 @@ export =function(provider: IProvider, opt: IClassOpt) {
         if (provider && provider.apn) {
             if (options.retry && options.ifOffline) {
                 if (options.dev) {
+                    
                     setfordev(provider, options).then(function() {
                         goconnect(provider, options).then(function() {
                             reject({ running: false, daemonized: true });
@@ -153,10 +153,8 @@ export =function(provider: IProvider, opt: IClassOpt) {
 
                     goconnect(provider, options).then(function() {
                         reject({ running: false, daemonized: true });
-
                     }).catch(function(err) {
                         reject(err);
-
                     })
 
                     timerdaemon.post(240000, function() {
@@ -164,7 +162,9 @@ export =function(provider: IProvider, opt: IClassOpt) {
                             goconnect(provider, options);
                         });
                     });
+                    
                 };
+                
             } else {
 
                 if (options.ifOffline) {
@@ -194,7 +194,6 @@ export =function(provider: IProvider, opt: IClassOpt) {
                             })
                         })
                     }
-
 
                 } else {
                     if (options.dev) {

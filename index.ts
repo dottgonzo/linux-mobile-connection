@@ -8,8 +8,8 @@ import lsusbdev = require('lsusbdev');
 
 let verb = require('verbo');
 
-function setfordev(provider:IClassProvider, options:IClassOpt) {
-    var mobilemodem = new Wvdial(options.wvdialFile);
+function setfordev(provider:IProvider, options:IClassConf) {
+    let mobilemodem = new Wvdial(options.wvdialFile);
 
     return new Promise(function(resolve, reject) {
 
@@ -55,10 +55,10 @@ function setfordev(provider:IClassProvider, options:IClassOpt) {
 }
 
 
-function goconnect(provider, options) {
+function goconnect(provider:IProvider, options:IClassConf) {
 
 
-    var mobilemodem = new Wvdial(options.wvdialFile);
+    let mobilemodem = new Wvdial(options.wvdialFile);
 
     return new Promise(function(resolve, reject) {
 
@@ -69,30 +69,25 @@ function goconnect(provider, options) {
 
                 }).catch(function(err) {
                     reject(err);
-
                 });
             }).catch(function(err) {
-                reject(err)
-            })
+                reject(err);
+            });
 
         } else {
             mobilemodem.configure(provider).then(function() {
-
                 mobilemodem.connect().then(function() {
                     resolve({ success: true });
-
                 }).catch(function(err) {
                     reject(err);
-
                 });
-
             }).catch(function(err) {
-                reject(err)
-            })
+                reject(err);
+            });
 
-        }
-    })
-}
+        };
+    });
+};
 
 
 
@@ -103,31 +98,24 @@ interface IClassConf {
     dev: any;
     ifOffline: boolean;
     retry: boolean;
-}
+};
 interface IClassOpt {
     verbose?: boolean;
     wvdialFile?: string;
     dev?: any;
     ifOffline?: boolean;
     retry?: boolean;
-}
+};
 interface IProvider {
-    label: string;
-    apn: string;
-    phone?: string
-    username?: string;
-    password?: string;
-}
-interface IClassProvider {
     label?: string;
     apn: string;
     phone?: string
     username?: string;
     password?: string;
-}
+};
 
 
-export =function(provider: IClassProvider, opt: IClassOpt) {
+export =function(provider: IProvider, opt: IClassOpt) {
     return new Promise(function(resolve, reject) {
 
         let options: IClassConf = {
@@ -141,7 +129,7 @@ export =function(provider: IClassProvider, opt: IClassOpt) {
         //  options.retryMax=10;
         if (opt) {
             merge(options, opt);
-        }
+        };
         if (provider && provider.apn) {
             if (options.retry && options.ifOffline) {
                 if (options.dev) {
@@ -150,15 +138,15 @@ export =function(provider: IClassProvider, opt: IClassOpt) {
                             reject({ running: false, daemonized: true });
                         }).catch(function(err) {
                             reject(err);
-                        })
+                        });
                         timerdaemon.post(240000, function() {
                             testConnection().catch(function() {
-                                goconnect(provider, options)
-                            })
-                        })
+                                goconnect(provider, options);
+                            });
+                        });
                     }).catch(function(err) {
-                        reject(err)
-                    })
+                        reject(err);
+                    });
 
 
                 } else {
@@ -173,10 +161,10 @@ export =function(provider: IClassProvider, opt: IClassOpt) {
 
                     timerdaemon.post(240000, function() {
                         testConnection().catch(function() {
-                            goconnect(provider, options)
-                        })
+                            goconnect(provider, options);
+                        });
                     });
-                }
+                };
             } else {
 
                 if (options.ifOffline) {
@@ -188,23 +176,21 @@ export =function(provider: IClassProvider, opt: IClassOpt) {
                             }).catch(function() {
                                 goconnect(provider, options).then(function(data) {
                                     resolve(data);
-
                                 }).catch(function(err) {
-                                    reject(err)
-                                })
-                            })
+                                    reject(err);
+                                });
+                            });
                         }).catch(function(err) {
-                            reject(err)
-                        })
+                            reject(err);
+                        });
                     } else {
                         testConnection().then(function() {
                             reject({ online: true });
                         }).catch(function() {
                             goconnect(provider, options).then(function(data) {
                                 resolve(data);
-
                             }).catch(function(err) {
-                                reject(err)
+                                reject(err);
                             })
                         })
                     }
@@ -214,29 +200,24 @@ export =function(provider: IClassProvider, opt: IClassOpt) {
                     if (options.dev) {
                         setfordev(provider, options).then(function() {
                             goconnect(provider, options).then(function(answer) {
-                                resolve(answer)
-
+                                resolve(answer);
                             }).catch(function(err) {
-                                reject(err)
+                                reject(err);
                             })
                         }).catch(function(err) {
-                            reject(err)
-                        })
+                            reject(err);
+                        });
                     } else {
                         goconnect(provider, options).then(function(answer) {
                             resolve(answer)
-
                         }).catch(function(err) {
                             reject(err)
-                        })
-
-                    }
-                }
-            }
-
+                        });
+                    };
+                };
+            };
         } else {
             reject({ error: "You must provide a valid Apn" })
-        }
-
-    })
-}
+        };
+    });
+};

@@ -1,14 +1,12 @@
 {
   "name": "linux-mobile-connection",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "#mocha",
     "connect-tre": "node run/tre.js",
     "connect-tre-4": "node run/tre_with_4.js",
-    "hw": "git add -A && git commit -m 'oki'&&npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
-    "patch": "npm version patch -m patch&&git add -A && git commit --amend -C HEAD&& git push&&npm publish",
     "prepublish": "#npm test"
   },
   "repository": {
@@ -34,7 +32,7 @@
     "netw": "0.0.47",
     "path-exists": "^2.0.0",
     "promise-test-connection": "0.0.12",
-    "timerdaemon": "0.0.2",
+    "timerdaemon": "0.0.4",
     "verbo": "0.0.9",
     "wvdialjs": "0.0.31"
   },

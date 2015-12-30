@@ -1,10 +1,11 @@
 import * as pathExists from "path-exists";
 import * as Promise from "bluebird";
+import * as timerdaemon from "timerdaemon";
 import Wvdial = require("wvdialjs");
 import testConnection = require('promise-test-connection');
 import merge = require("json-add");
 import lsusbdev = require('lsusbdev');
-let timerdaemon = require('timerdaemon');
+
 let verb = require('verbo');
 
 function setfordev(provider:IClassProvider, options:IClassOpt) {

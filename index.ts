@@ -49,11 +49,10 @@ function setfordev(provider:IProvider, options:IClassConf) {
             });
         } else {
             reject({ error: "Wrong device" });
-        }
+        };
 
-    })
-}
-
+    });
+};
 
 function goconnect(provider:IProvider, options:IClassConf) {
 

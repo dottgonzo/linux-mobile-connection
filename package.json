@@ -1,6 +1,6 @@
 {
   "name": "linux-mobile-connection",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -29,12 +29,12 @@
     "bluebird": "^3.1.1",
     "json-add": "0.0.7",
     "lsusbdev": "0.0.6",
-    "netw": "0.0.47",
+    "netw": "0.0.50",
     "path-exists": "^2.0.0",
     "promise-test-connection": "0.0.12",
     "timerdaemon": "0.0.4",
     "verbo": "0.0.9",
-    "wvdialjs": "0.0.31"
+    "wvdialjs": "0.0.32"
   },
   "devDependencies": {
     "chai": "^3.4.1",

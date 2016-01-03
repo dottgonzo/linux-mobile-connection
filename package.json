@@ -1,6 +1,6 @@
 {
   "name": "linux-mobile-connection",
-  "version": "0.0.52",
+  "version": "0.0.53",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "lsusbdev": "0.0.7",
     "netw": "0.0.52",
     "path-exists": "^2.0.0",
-    "promise-test-connection": "0.0.26",
+    "promise-test-connection": "0.0.27",
     "timerdaemon": "0.0.4",
     "verbo": "0.0.9",
     "wvdialjs": "0.0.36"

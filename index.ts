@@ -1,6 +1,7 @@
 import * as pathExists from "path-exists";
 import * as Promise from "bluebird";
 import * as timerdaemon from "timerdaemon";
+
 import Wvdial = require("wvdialjs");
 import testConnection = require('promise-test-connection');
 import merge = require("json-add");
@@ -11,7 +12,7 @@ let verb = require('verbo');
 function setfordev(provider:IProvider, options:IClassConf) {
     let mobilemodem = new Wvdial(options.wvdialFile);
 
-    return new Promise(function(resolve, reject) {
+    return new Promise<boolean>(function(resolve, reject) {
 
         if (pathExists.sync('/sys/bus/usb/devices/' + options.dev)) {
 
@@ -22,7 +23,7 @@ function setfordev(provider:IProvider, options:IClassConf) {
 
                         if (pathExists.sync(options.wvdialFile)) {
                             mobilemodem.setUsb(usb.dev).then(function() {
-                                resolve({ success: true });
+                                resolve(true);
                             }).catch(function(err) {
                                 reject(err);
                             });
@@ -31,7 +32,7 @@ function setfordev(provider:IProvider, options:IClassConf) {
 
                             mobilemodem.configure(provider).then(function() {
                                 mobilemodem.setUsb(usb.dev).then(function() {
-                                    resolve({ success: true });
+                                    resolve(true);
                                 }).catch(function(err) {
                                     reject(err);
                                     console.log('here8');
@@ -58,12 +59,12 @@ function goconnect(provider:IProvider, options:IClassConf) {
 
     let mobilemodem = new Wvdial(options.wvdialFile);
 
-    return new Promise(function(resolve, reject) {
+    return new Promise<boolean>(function(resolve, reject) {
 
         if (options.dev) {
             setfordev(provider, options).then(function() {
                 mobilemodem.connect().then(function() {
-                    resolve({ success: true });
+                    resolve(true);
 
                 }).catch(function(err) {
                     reject(err);
@@ -75,7 +76,7 @@ function goconnect(provider:IProvider, options:IClassConf) {
         } else {
             mobilemodem.configure(provider).then(function() {
                 mobilemodem.connect().then(function() {
-                    resolve({ success: true });
+                    resolve(true);
                 }).catch(function(err) {
                     reject(err);
                 });
@@ -114,7 +115,7 @@ interface IProvider {
 
 
 export = function(provider: IProvider, opt: IClassOpt) {
-    return new Promise(function(resolve, reject) {
+    return new Promise<boolean>(function(resolve, reject) {
 
         let options: IClassConf = {
             verbose: true,

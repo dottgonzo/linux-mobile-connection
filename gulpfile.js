@@ -58,4 +58,3 @@ gulp.task('build', function () {
         .pipe(sourcemaps.write()) // Now the sourcemaps are added to the .js file 
         .pipe(gulp.dest('.'));
 });
-

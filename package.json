@@ -1,6 +1,6 @@
 {
   "name": "linux-mobile-connection",
-  "version": "0.0.54",
+  "version": "0.0.55",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "wvdial"
   ],
   "author": "Dario Caruso",
-  "license": "GPLv2",
+  "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/dottgonzo/linux-mobile-connection/issues"
   },
@@ -34,7 +34,7 @@
     "promise-test-connection": "0.0.27",
     "timerdaemon": "0.0.4",
     "verbo": "0.0.9",
-    "wvdialjs": "0.0.37"
+    "wvdialjs": "0.0.39"
   },
   "devDependencies": {
     "chai": "^3.4.1",
